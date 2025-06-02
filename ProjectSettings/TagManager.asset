@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - CinemachineTarget
+  - Segment
+  - PowerStation
+  - Cell
+  - Connector
+  - EnergyNode
+  - PowerSocket
   layers:
   - Default
   - TransparentFX
@@ -12,10 +18,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - PowerStation
+  - PowerSocket
   - Interactable
-  - 
+  - Node
   - 
   - 
   - 
