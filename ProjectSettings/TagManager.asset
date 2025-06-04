@@ -14,6 +14,7 @@ TagManager:
   - CoreEasy
   - CoreMedium
   - CoreHard
+  - CoreKey
   layers:
   - Default
   - TransparentFX

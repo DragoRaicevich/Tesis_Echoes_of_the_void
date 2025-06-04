@@ -4,19 +4,40 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteractions : MonoBehaviour
 {
-    [Header("CORE PUZZLES")]
     [SerializeField] private bool canInteract;
-    [SerializeField] private int corePuzzleIndex = -1;
+    [Header("CORE PUZZLE")]
+    private GameObject coreKeyObj;
+    [SerializeField] private bool hasCoreKey;
+    [SerializeField] private bool isCoreKey;
+    private int corePuzzleIndex = -1;
 
- 
+
     public void Interact(InputAction.CallbackContext context)
     {
-        if (canInteract && corePuzzleIndex >= 0)
+        GetCoreKey();
+        if (hasCoreKey && canInteract && corePuzzleIndex >= 0)
         {
+            Debug.Log("Interacting with core puzzle at index: " + corePuzzleIndex);
             UIManager.Instance.ActivetePuzzleCore(corePuzzleIndex);
+        }
+        else if(hasCoreKey == false && canInteract)
+        {
+            UIManager.Instance.ShowNeedKeyMessage();
         }
     }
 
+    private void GetCoreKey()
+    {
+        if (isCoreKey == true && canInteract)
+        {
+            hasCoreKey = true;
+            coreKeyObj.SetActive(false);
+            canInteract = false;
+            UIManager.Instance.HideInteractionKeyMessage();
+
+            isCoreKey = false;
+        }
+    }
 
     private void OnTriggerEnter(Collider tri)
     {
@@ -34,17 +55,35 @@ public class PlayerInteractions : MonoBehaviour
                 corePuzzleIndex = 2;
                 break;
             default:
-                Debug.Log("Tag desconocido: " + tagName);
+                Debug.Log("Otro tag: " + tagName);
                 break;
         }
 
+        if(tagName == "CoreKey")
+        {
+            isCoreKey = true;
+            coreKeyObj = tri.gameObject;
+        }
+
+        UIManager.Instance.ShowInteractionKeyMessage();
     }
     private void OnTriggerExit(Collider tri)
     {
+        canInteract = false;
+
         if (tri.tag == "CoreEasy" || tri.tag == "CoreMedium" || tri.tag == "CoreHard")
         {
-            canInteract = false;
             corePuzzleIndex = -1;
         }
+
+        if (tri.tag == "CoreKey")
+        {
+            isCoreKey = false;
+            coreKeyObj = null;
+        }
+
+        UIManager.Instance.HideInteractionKeyMessage();
     }
+
+    
 }
