@@ -1,30 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PuzzlePowerController : MonoBehaviour
 {
     [SerializeField] private List<EnergyNode> energyNodeList;
     [SerializeField] private PowerSocket powerSocket;
+    [SerializeField] private Button startButton;
 
-    public List<EnergyNode> EnergyNodeList { get => energyNodeList; set => energyNodeList = value; }
-    bool powerStationIsConnected = false;
-    bool allNodesConected = true;
+    private bool powerStationIsConnected = false;
+    private bool allNodesConected = true;
+
+    public static event Action OnCoreCompleted;
 
 
-    public void CheckPower()
+    // Este metodo se llama al pulzar el boton "START".
+    public void CheckPower() 
     {
         CheckNodes();
 
         if (allNodesConected == true && powerStationIsConnected == true)
         {
-            Debug.Log("Puzzle is complete!");
-            // Here you can add logic to handle the completion of the puzzle, like triggering an event or changing the game state.
-        }
-        else
-        {
-            Debug.Log("Puzzle is not complete yet.");
+            OnCoreCompleted?.Invoke();
+            startButton.interactable = false; 
         }
     }
 

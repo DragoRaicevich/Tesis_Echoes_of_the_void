@@ -11,6 +11,9 @@ TagManager:
   - Connector
   - EnergyNode
   - PowerSocket
+  - CoreEasy
+  - CoreMedium
+  - CoreHard
   layers:
   - Default
   - TransparentFX
