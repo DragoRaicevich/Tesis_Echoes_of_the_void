@@ -22,5 +22,7 @@ public class InteractionNode : MonoBehaviour, IPointerClickHandler
         {
             mouseIcon.SetActive(false);
         }
+
+        SoundManager.Instance.PlayCoreZoneSound(1, 0.5f);
     }
 }

@@ -11,18 +11,29 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private bool isCoreKey;
     private int corePuzzleIndex = -1;
 
-
+    string tagName;
     public void Interact(InputAction.CallbackContext context)
     {
-        GetCoreKey();
-        if (hasCoreKey && canInteract && corePuzzleIndex >= 0)
+        if (canInteract && tagName == "CoreKey")
         {
-            Debug.Log("Interacting with core puzzle at index: " + corePuzzleIndex);
-            UIManager.Instance.ActivetePuzzleCore(corePuzzleIndex);
+            GetCoreKey();
         }
-        else if(hasCoreKey == false && canInteract)
+
+        if (canInteract && (tagName == "CoreEasy" || tagName == "CoreMedium" || tagName == "CoreHard"))
         {
-            UIManager.Instance.ShowNeedKeyMessage();
+            if(hasCoreKey == true)
+            {
+                UIManager.Instance.ActivetePuzzleCore(corePuzzleIndex);
+            }
+            else
+            {
+                UIManager.Instance.ShowNeedKeyMessage();
+            }
+        }
+
+        if (canInteract && tagName == "Touchpad")
+        {
+            UIManager.Instance.ActivateTouchpadPanel();
         }
     }
 
@@ -35,13 +46,14 @@ public class PlayerInteractions : MonoBehaviour
             canInteract = false;
             UIManager.Instance.HideInteractionKeyMessage();
 
+            SoundManager.Instance.PlayGeneralSound(1, 0.75f);
             isCoreKey = false;
         }
     }
 
     private void OnTriggerEnter(Collider tri)
     {
-        string tagName = tri.tag;
+        tagName = tri.tag;
         canInteract = true;
         switch (tagName)
         {
@@ -70,6 +82,7 @@ public class PlayerInteractions : MonoBehaviour
     private void OnTriggerExit(Collider tri)
     {
         canInteract = false;
+        tagName = null;
 
         if (tri.tag == "CoreEasy" || tri.tag == "CoreMedium" || tri.tag == "CoreHard")
         {

@@ -21,16 +21,17 @@ public class PuzzlePowerController : MonoBehaviour
     public void CheckPower() 
     {
         CheckNodes();
-
         if (allNodesConected == true && powerStationIsConnected == true)
         {
             OnCoreCompleted?.Invoke();
             startButton.interactable = false; 
+            SoundManager.Instance.PlayCoreZoneSound(0, 0.5f);
         }
     }
 
     private void CheckNodes()
     {
+        SoundManager.Instance.PlayWiringZoneSound(0, 0.1f);
         foreach (var node in energyNodeList)
         {
             node.CheckConnectors();

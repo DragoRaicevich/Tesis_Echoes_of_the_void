@@ -5,7 +5,8 @@ public class GameManager : MonoBehaviour
     [Header("CORE ZONE")]
     [SerializeField] private bool coreZoneCompleted = false;
     private int coresComplete = 0;
-
+    [Header("WIRING ZONE")]
+    [SerializeField] private bool wiringZoneCompleted = false;
     private void Start()
     {
         PuzzlePowerController.OnCoreCompleted += CoreComplete;

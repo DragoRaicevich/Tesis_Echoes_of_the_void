@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private FirstPersonController firstPersonController;
     [SerializeField] private MouseLook mouseLook;
 
+    [Header("INITIAL CAPSULE")]
+    [SerializeField] private GameObject tochpadPanel;
+
     [Header("MESSAGES")]
     [SerializeField] private GameObject interactionMessage;
     [SerializeField] private GameObject needKeyMessage;
@@ -29,6 +32,13 @@ public class UIManager : MonoBehaviour
         }
 
     }
+
+    public void ActivateTouchpadPanel()
+    {
+        tochpadPanel.SetActive(true);
+        DeactivatePlayerControlls();
+    }
+
     public void ActivetePuzzleCore(int index)
     {
         DeactivatePlayerControlls();
