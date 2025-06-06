@@ -16,6 +16,7 @@ TagManager:
   - CoreHard
   - CoreKey
   - Touchpad
+  - opciones
   layers:
   - Default
   - TransparentFX
